@@ -1,101 +1,143 @@
 "use client"
 
 import { motion } from "framer-motion"
-import { Github, Code2, Trophy, Twitter, Calendar, BookOpen, GitBranch, Database } from "lucide-react"
-
-const integrations = [
-  { icon: Github, name: "GitHub", color: "text-white" },
-  { icon: Code2, name: "LeetCode", color: "text-yellow-400" },
-  { icon: Trophy, name: "Codeforces", color: "text-blue-400" },
-  { icon: Twitter, name: "Twitter", color: "text-cyan-400" },
-  { icon: Calendar, name: "HackerRank", color: "text-green-400" },
-  { icon: BookOpen, name: "GeeksforGeeks", color: "text-emerald-400" },
-  { icon: GitBranch, name: "GitLab", color: "text-orange-400" },
-  { icon: Database, name: "CodeChef", color: "text-purple-400" },
-]
+import { FlickeringGrid } from "@/components/ui/flickering-grid"
+import { MorphingText } from "@/components/ui/morphing-text"
 
 export function Integrations() {
   return (
-    <section className="relative py-24 bg-black border-t border-white/5">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Heading */}
-        <motion.div
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6 }}
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4" >
-
-            Track 
-            <span className="text-purple-200 font-bold mx-4" style={{ fontFamily: "'Handjet', cursive" }}>
-                Everything
-            </span>
-             at one place
-          </h2>
-          <div className="h-1 w-24 bg-gradient-to-r from-yellow-500 via-orange-400 to-purple-300 mx-auto rounded-full" />
-        </motion.div>
-
-        {/* Logos Grid */}
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-8 gap-8 mb-16"
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-        >
-          {integrations.map((integration, index) => {
-            const Icon = integration.icon
-            return (
+    <section className="relative py-32 bg-black border-t border-white/5">
+      <div className="max-w-5xl mx-auto px-6">
+        
+        {/* Main Content Box */}
+        <div className="relative">
+          {/* Boxy Container */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="relative p-12 md:p-16 bg-white/5 border border-white/10 rounded-sm overflow-hidden"
+          >
+            
+            {/* Flickering Grid Background - Only behind card */}
+            <div className="absolute inset-0 z-0">
+              <FlickeringGrid
+                className="w-full h-full"
+                squareSize={6}
+                gridGap={8}
+                color="rgb(168, 85, 247)"
+                maxOpacity={0.15}
+                flickerChance={0.1}
+              />
+            </div>
+            
+            {/* Content */}
+            <div className="relative z-10 space-y-8 text-center">
+              
+              {/* Small Label */}
               <motion.div
-                key={integration.name}
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: index * 0.1 }}
-                className="group flex flex-col items-center justify-center"
+                transition={{ duration: 0.6, delay: 0.2 }}
               >
-                {/* Logo Container */}
-                <div className="relative">
-                  {/* Glow effect on hover */}
-                  <div className="absolute inset-0 rounded-2xl bg-gradient-to-br from-white/10 to-transparent opacity-0 group-hover:opacity-100 blur-xl transition-opacity duration-500" />
-                  
-                  {/* Icon */}
-                  <div className="relative p-6 rounded-2xl bg-white/5 border border-white/10 group-hover:border-white/20 transition-all duration-300 group-hover:scale-110">
-                    <Icon className={`w-8 h-8 ${integration.color} transition-transform duration-300 group-hover:scale-110`} />
-                  </div>
-                </div>
-
-                {/* Label - appears on hover */}
-                <div className="mt-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                  <span className="text-xs text-white/60 font-medium">
-                    {integration.name}
-                  </span>
-                </div>
+                <span className="text-sm uppercase tracking-wider text-white/40 font-semibold">
+                  What is Rivalries?
+                </span>
               </motion.div>
-            )
-          })}
-        </motion.div>
 
-        {/* Bottom Text */}
-        <motion.div
-          className="text-center"
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-        >
-          <p className="text-2xl md:text-3xl text-white/40 font-light">
-            or anything else you need
-          </p>
-        </motion.div>
+              {/* Main Explanation */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+                className="space-y-6"
+              >
+                <h2 className="text-4xl md:text-5xl font-bold text-white leading-tight">
+                  A platform that tracks{" "}
+                  <span className="text-purple-300" style={{ fontFamily: "'Handjet', cursive" }}>
+                    everything
+                  </span>
+                  {" "}you do
+                </h2>
+                
+                {/* Morphing Text */}
+                <div className="my-8 mb-10">
+                  <MorphingText
+                    texts={[
+                      "GitHub commits",
+                      "LeetCode problems",
+                      "Codeforces contests",
+                      "Custom goals"
+                    ]}
+                    className="h-12 md:h-16 text-xl md:text-2xl text-orange-700/70"
+                    
+                  />
+                </div>
+
+                <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto leading-relaxed mt-4">
+                  All your progress, unified into one score: <span className="text-white font-semibold">XP</span>.
+                </p>
+              </motion.div>
+
+              {/* Divider */}
+              <div className="h-px w-24 bg-white/20 mx-auto" />
+
+              {/* Secondary Explanation */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.5 }}
+                className="space-y-6"
+              >
+                <p className="text-xl md:text-2xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+                  Build streaks. Compete on leaderboards with friends and your college. 
+                  Watch your ranking climb as you stay consistent.
+                </p>
+                
+                <p className="text-2xl md:text-3xl text-white/90 max-w-2xl mx-auto leading-relaxed font-medium">
+                  But here&apos;s the truth—
+                  <br />
+                  <span className="italic text-purple-200" style={{ fontFamily: "'Handjet', cursive" }}>
+                    your biggest rival is yourself.
+                  </span>
+                </p>
+              </motion.div>
+
+              {/* Bottom Statement */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                whileInView={{ opacity: 1 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: 0.7 }}
+                className="pt-8"
+              >
+                <p className="text-lg text-white/50">
+                  Every day is a chance to beat yesterday&apos;s version of you.
+                </p>
+              </motion.div>
+            </div>
+
+            {/* Corner Accents */}
+            <div className="absolute top-0 left-0 w-2 h-16 bg-gradient-to-b from-purple-400 to-transparent" />
+            <div className="absolute top-0 right-0 w-2 h-16 bg-gradient-to-b from-yellow-400 to-transparent" />
+            <div className="absolute bottom-0 left-0 w-2 h-16 bg-gradient-to-t from-orange-400 to-transparent" />
+            <div className="absolute bottom-0 right-0 w-2 h-16 bg-gradient-to-t from-pink-400 to-transparent" />
+            
+            {/* Top Edge Accent */}
+            <div className="absolute top-0 left-20 right-20 h-0.5 bg-gradient-to-r from-transparent via-white/20 to-transparent" />
+          </motion.div>
+        </div>
+
       </div>
 
       {/* Background decorative elements */}
-      <div className="absolute inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
-        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
+        <div className="absolute top-1/2 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl" />
+        <div className="absolute top-1/2 right-1/4 w-96 h-96 bg-yellow-500/5 rounded-full blur-3xl" />
       </div>
     </section>
   )

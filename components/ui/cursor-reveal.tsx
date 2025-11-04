@@ -14,7 +14,14 @@ export function CursorReveal({ className }: CursorRevealProps) {
   const canvasRef = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
+    let lastUpdateTime = 0
+    const throttleMs = 16 // ~60fps max
+    
     const handleMouseMove = (e: MouseEvent) => {
+      const now = performance.now()
+      if (now - lastUpdateTime < throttleMs) return
+      lastUpdateTime = now
+      
       if (!containerRef.current) return
       
       const rect = containerRef.current.getBoundingClientRect()
@@ -112,17 +119,29 @@ export function CursorReveal({ className }: CursorRevealProps) {
     }
 
     const resizeCanvas = () => {
-      canvas.width = canvas.offsetWidth
-      canvas.height = canvas.offsetHeight
+      // Reduce canvas resolution for better performance (0.5x scale)
+      canvas.width = canvas.offsetWidth * 0.5
+      canvas.height = canvas.offsetHeight * 0.5
       generateNoiseTexture()
     }
 
     resizeCanvas()
     window.addEventListener("resize", resizeCanvas)
 
-    const revealRadius = 300
+    const revealRadius = 150 // Reduced from 300
 
-    const animate = () => {
+    let lastFrameTime = 0
+    const targetFps = 30 // Limit to 30 FPS for performance
+    const frameInterval = 1000 / targetFps
+
+    const animate = (currentTime: number) => {
+      // Throttle animation to target FPS
+      if (currentTime - lastFrameTime < frameInterval) {
+        animationFrameId = requestAnimationFrame(animate)
+        return
+      }
+      lastFrameTime = currentTime
+
       ctx.clearRect(0, 0, canvas.width, canvas.height)
 
       if (!isInImageArea || !noiseCanvas) {
@@ -133,12 +152,12 @@ export function CursorReveal({ className }: CursorRevealProps) {
       // Draw the cached noise texture
       ctx.drawImage(noiseCanvas, 0, 0)
 
-      // Apply the circular mask
+      // Apply the circular mask (adjusted for 0.5x canvas scale)
       ctx.globalCompositeOperation = 'destination-in'
       
       const gradient = ctx.createRadialGradient(
-        mousePositionRef.current.x, mousePositionRef.current.y, 0,
-        mousePositionRef.current.x, mousePositionRef.current.y, revealRadius
+        mousePositionRef.current.x * 0.5, mousePositionRef.current.y * 0.5, 0,
+        mousePositionRef.current.x * 0.5, mousePositionRef.current.y * 0.5, revealRadius * 0.5
       )
       gradient.addColorStop(0, 'rgba(255, 255, 255, 1)')
       gradient.addColorStop(0.4, 'rgba(255, 255, 255, 0.6)')

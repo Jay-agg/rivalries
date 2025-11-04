@@ -44,6 +44,7 @@ export function Navbar() {
               className="text-2xl md:text-3xl font-bold text-white"
               whileHover={{ scale: 1.05 }}
               transition={{ type: "spring", stiffness: 400 }}
+              style={{ fontFamily: "'Handjet', cursive" }}
             >
               rivalries
             </motion.div>

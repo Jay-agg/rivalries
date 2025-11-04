@@ -381,9 +381,9 @@ export function Features() {
   return (
     <section className="relative bg-black overflow-hidden">
       {/* Lamp Effect */}
-      <LampContainer>
+      <LampContainer className="mb-16">
         <motion.h2
-          className="text-5xl md:text-7xl font-bold text-white text-center mb-4"
+          className="text-2xl md:text-5xl font-bold text-white text-center mb-4"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
