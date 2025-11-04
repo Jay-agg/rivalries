@@ -19,6 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark" suppressHydrationWarning>
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css2?family=Handjet:wght@100..900&family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+      </head>
       <body className="antialiased">
         {children}
       </body>

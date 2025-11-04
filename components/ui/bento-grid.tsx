@@ -42,25 +42,28 @@ const BentoCard = ({
   href,
   cta,
   ...props
-}: BentoCardProps) => (
-  <div
-    key={name}
-    className={cn(
-      "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-      // dark styles
-      "bg-black transform-gpu [box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] [border:1px_solid_rgba(255,255,255,.1)]",
-      className
-    )}
-    {...props}
-  >
-    <div>{background}</div>
-    
-    {/* Backdrop for text readability */}
-    <div className="absolute bottom-0 left-0 right-0 h-2/5 bg-gradient-to-t from-black via-black/95 to-transparent pointer-events-none" />
-    
-    <div className="relative p-6 z-10">
-      <div className="pointer-events-none flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10">
-        <Icon className="h-12 w-12 origin-left transform-gpu text-neutral-300 transition-all duration-300 ease-in-out group-hover:scale-75" />
+}: BentoCardProps) => {
+  const IconComponent = Icon as React.ComponentType<{ className?: string; "aria-hidden"?: boolean }>
+  
+  return (
+    <div
+      key={name}
+      className={cn(
+        "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
+        // dark styles
+        "bg-black transform-gpu [box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] [border:1px_solid_rgba(255,255,255,.1)]",
+        className
+      )}
+      {...props}
+    >
+      <div>{background}</div>
+      
+      {/* Backdrop for text readability */}
+      <div className="absolute bottom-0 left-0 right-0 h-2/5 bg-gradient-to-t from-black via-black/95 to-transparent pointer-events-none" />
+      
+      <div className="relative p-6 z-10">
+        <div className="pointer-events-none flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10">
+          <IconComponent className="h-12 w-12 origin-left transform-gpu text-neutral-300 transition-all duration-300 ease-in-out group-hover:scale-75" aria-hidden={true} />
         <h3 className="text-xl font-semibold text-white">
           {name}
         </h3>
@@ -98,8 +101,9 @@ const BentoCard = ({
       )}
     </div>
 
-    <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-neutral-800/10" />
-  </div>
-)
+      <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-neutral-800/10" />
+    </div>
+  )
+}
 
 export { BentoCard, BentoGrid }
