@@ -1,6 +1,6 @@
 "use client"
 
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react"
 import { cn } from "@/lib/utils"
 
 interface GridPatternProps {
@@ -20,7 +20,12 @@ export function GridPattern({
   strokeDasharray = "0",
   className,
 }: GridPatternProps) {
-  const id = useRef(`pattern-${Math.random().toString(36).substr(2, 9)}`)
+  const [id, setId] = useState("pattern-default")
+
+  useEffect(() => {
+    // Generate ID only on client side to avoid hydration mismatch
+    setId(`pattern-${Math.random().toString(36).substr(2, 9)}`)
+  }, [])
 
   return (
     <svg
@@ -32,7 +37,7 @@ export function GridPattern({
     >
       <defs>
         <pattern
-          id={id.current}
+          id={id}
           width={width}
           height={height}
           patternUnits="userSpaceOnUse"
@@ -46,7 +51,7 @@ export function GridPattern({
           />
         </pattern>
       </defs>
-      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id.current})`} />
+      <rect width="100%" height="100%" strokeWidth={0} fill={`url(#${id})`} />
     </svg>
   )
 }

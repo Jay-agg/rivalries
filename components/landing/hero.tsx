@@ -2,50 +2,67 @@
 
 import { motion } from "framer-motion"
 import { Button } from "@/components/ui/button"
+import { CursorReveal } from "@/components/ui/cursor-reveal"
 import Link from "next/link"
 import Image from "next/image"
+import { ArrowRight } from "lucide-react"
 
 export function Hero() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-black flex items-center justify-center">
-      {/* Background Image - You'll replace this with your actual image */}
-      <div className="absolute inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/40 to-black z-10" />
-        {/* Replace /hero-bg.png with your actual background image path */}
-        <Image
-          src="/hero-bg.png"
-          alt="Background"
-          fill
-          className="object-cover opacity-30"
-          priority
-        />
+      {/* Cursor Reveal Effect - Full screen tracking */}
+      <CursorReveal className="absolute inset-0 z-0" />
+
+      {/* Background Image */}
+      <div className="absolute inset-0 z-0 m-24 pointer-events-none">
+        <div className="relative h-full w-full rounded-2xl outline outline-gray-500 overflow-hidden">
+          <div className="absolute inset-0 rounded-2xl">
+            <Image
+              src="/rivalhero.jpg"
+              alt="Background"
+              fill
+              className="object-cover opacity-30"
+              priority
+            />
+          </div>
+        </div>
       </div>
+
       
       {/* Content */}
-      <div className="relative z-20 max-w-7xl mx-auto px-6 py-32 text-center">
+      <div className="relative z-20 max-w-7xl mx-auto mx-6 my-32 text-center pointer-events-auto">
         <motion.div
           className="space-y-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
-          {/* Main Title */}
-          <h1 className="text-7xl md:text-8xl lg:text-9xl font-bold tracking-tight text-white">
-            rivalries
+
+          <h1 className="text-7xl font-bold md:text-3xl lg:text-5xl font-italic tracking-tight text-white">
+          Compete. Improve. Repeat. 
+          </h1>
+          <h1 className="text-5xl text-purple-200 md:text-3xl lg:text-5xl font-italic tracking-tight" style={{ fontFamily: "'Handjet', cursive" }}>
+          
           </h1>
 
-          {/* Tagline */}
-          <p className="text-2xl md:text-3xl text-white/60 font-light max-w-2xl mx-auto">
-            maybe you&apos;re your own rival
+          <div className="flex flex-row items-center justify-center">
+          <p className="text-2xl md:text-3xl text-white/60 font-light max-w-2xl mr-2">
+          Turn your progress into a 
           </p>
+          <p  className="text-2xl text-purple-200 md:text-3xl lg:text-3xl font-italic tracking-tight" style={{ fontFamily: "'Handjet', cursive" }}>
+          rivalry
+          </p>  
 
-          {/* Description */}
-          <p className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
+          </div>
+          
+
+
+          {/* <p className="text-lg md:text-xl text-white/70 max-w-3xl mx-auto leading-relaxed">
             Track your coding journey. Compete with friends. 
             Stay consistent. Turn your progress into XP and climb the leaderboards.
-          </p>
+          </p> */}
 
-          {/* CTA Buttons */}
+
           <motion.div
             className="flex flex-col sm:flex-row gap-4 items-center justify-center pt-8"
             initial={{ opacity: 0, y: 20 }}
@@ -55,18 +72,18 @@ export function Hero() {
             <Link href="/auth/signup">
               <Button 
                 size="lg" 
-                className="text-lg px-12 py-7 rounded-full bg-white text-black hover:bg-white/90 transition-all hover:scale-105 font-semibold"
+                className="text-lg px-8 py-3 rounded-sm bg-white text-black hover:bg-white/90 transition-all hover:scale-105 font-semibold cursor-pointer"
               >
-                ready to face yourself?
+                Arena <ArrowRight />
               </Button>
             </Link>
             <Link href="/dashboard">
               <Button 
                 variant="outline" 
                 size="lg"
-                className="text-lg px-12 py-7 rounded-full border-2 border-white/20 hover:bg-white/10 transition-all hover:scale-105"
+                className="text-lg  px-8 py-3 rounded-sm  border-2 bg-black hover:bg-black/80 transition-all hover:scale-105 cursor-pointer"
               >
-                explore demo
+                Demo
               </Button>
             </Link>
           </motion.div>
@@ -74,7 +91,7 @@ export function Hero() {
       </div>
 
       {/* Scroll indicator */}
-      <motion.div
+      {/* <motion.div
         className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -83,7 +100,7 @@ export function Hero() {
         <div className="w-6 h-10 border-2 border-white/30 rounded-full flex items-start justify-center p-2">
           <div className="w-1 h-3 bg-white/60 rounded-full animate-pulse" />
         </div>
-      </motion.div>
+      </motion.div> */}
     </section>
   )
 }
