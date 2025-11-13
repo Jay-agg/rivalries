@@ -1,7 +1,6 @@
 "use client"
 
 import { ComponentPropsWithoutRef, ReactNode } from "react"
-import { ArrowRightIcon } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 interface BentoGridProps extends ComponentPropsWithoutRef<"div"> {
@@ -21,14 +20,22 @@ interface BentoCardProps extends ComponentPropsWithoutRef<"div"> {
 
 const BentoGrid = ({ children, className, ...props }: BentoGridProps) => {
   return (
-    <div
-      className={cn(
-        "grid w-full auto-rows-[22rem] grid-cols-3 gap-4",
-        className
-      )}
-      {...props}
-    >
-      {children}
+    <div className="relative overflow-visible">
+      {/* Extended border lines on outer edges only - brighter for visibility */}
+      <div className="absolute -top-4 inset-x-0 h-4 border-l-2 border-r-2 border-white/30 pointer-events-none z-10" />
+      <div className="absolute -bottom-4 inset-x-0 h-4 border-l-2 border-r-2 border-white/30 pointer-events-none z-10" />
+      <div className="absolute inset-y-0 -left-4 w-4 border-t-2 border-b-2 border-white/30 pointer-events-none z-10" />
+      <div className="absolute inset-y-0 -right-4 w-4 border-t-2 border-b-2 border-white/30 pointer-events-none z-10" />
+      
+      <div
+        className={cn(
+          "grid w-full auto-rows-[22rem] grid-cols-3 gap-0 border border-white/10",
+          className
+        )}
+        {...props}
+      >
+        {children}
+      </div>
     </div>
   )
 }
@@ -49,9 +56,10 @@ const BentoCard = ({
     <div
       key={name}
       className={cn(
-        "group relative col-span-3 flex flex-col justify-between overflow-hidden rounded-xl",
-        // dark styles
-        "bg-black transform-gpu [box-shadow:0_-20px_80px_-20px_#ffffff1f_inset] [border:1px_solid_rgba(255,255,255,.1)]",
+        "group relative col-span-3 flex flex-col justify-between overflow-hidden",
+        // dark styles - ultra boxy with sharp edges
+        "bg-black transform-gpu border border-white/10 transition-all duration-300",
+        "hover:border-white/30 hover:bg-white/5",
         className
       )}
       {...props}
@@ -62,46 +70,16 @@ const BentoCard = ({
       <div className="absolute bottom-0 left-0 right-0 h-2/5 bg-gradient-to-t from-black via-black/95 to-transparent pointer-events-none" />
       
       <div className="relative p-6 z-10">
-        <div className="pointer-events-none flex transform-gpu flex-col gap-1 transition-all duration-300 lg:group-hover:-translate-y-10">
-          <IconComponent className="h-12 w-12 origin-left transform-gpu text-neutral-300 transition-all duration-300 ease-in-out group-hover:scale-75" aria-hidden={true} />
-        <h3 className="text-xl font-semibold text-white">
-          {name}
-        </h3>
-        <p className="max-w-lg text-neutral-300">{description}</p>
+        <div className="pointer-events-none flex transform-gpu flex-col gap-1 transition-all duration-300 group-hover:-translate-y-2">
+          <IconComponent className="h-12 w-12 text-neutral-300 transition-colors duration-300 group-hover:text-white" aria-hidden={true} />
+          <h3 className="text-xl font-semibold text-white">
+            {name}
+          </h3>
+          <p className="max-w-lg text-neutral-300">{description}</p>
+        </div>
       </div>
 
-      {cta && href && (
-        <>
-          <div
-            className={cn(
-              "pointer-events-none flex w-full translate-y-0 transform-gpu flex-row items-center transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:hidden"
-            )}
-          >
-            <button
-              className="pointer-events-auto text-sm text-white/60 hover:text-white flex items-center gap-2 transition-colors"
-            >
-              {cta}
-              <ArrowRightIcon className="h-4 w-4" />
-            </button>
-          </div>
-
-          <div
-            className={cn(
-              "pointer-events-none absolute bottom-0 hidden w-full translate-y-10 transform-gpu flex-row items-center p-6 opacity-0 transition-all duration-300 group-hover:translate-y-0 group-hover:opacity-100 lg:flex"
-            )}
-          >
-            <button
-              className="pointer-events-auto text-sm text-white/60 hover:text-white flex items-center gap-2 transition-colors"
-            >
-              {cta}
-              <ArrowRightIcon className="h-4 w-4" />
-            </button>
-          </div>
-        </>
-      )}
-    </div>
-
-      <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-neutral-800/10" />
+      <div className="pointer-events-none absolute inset-0 transform-gpu transition-all duration-300 group-hover:bg-white/5" />
     </div>
   )
 }

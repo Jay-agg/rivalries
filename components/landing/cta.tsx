@@ -11,7 +11,7 @@ export function CTA() {
   return (
     <section className="relative min-h-screen w-full overflow-hidden bg-black flex items-center justify-center">
       {/* Cursor Reveal Effect */}
-      <CursorReveal className="absolute inset-0 z-0" />
+      {/* <CursorReveal className="absolute inset-0 z-0" /> */}
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-32 w-full">
         <div className="grid lg:grid-cols-2 gap-16 items-center">

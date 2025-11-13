@@ -5,6 +5,8 @@ import { createClient } from "@/lib/supabase/client"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { useRouter } from "next/navigation"
+import { PageLoader } from "@/components/ui/page-loader"
+import { AnimatePresence } from "framer-motion"
 
 interface AuthFormProps {
   mode: "signin" | "signup"
@@ -14,6 +16,7 @@ export function AuthForm({ mode }: AuthFormProps) {
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
   const [loading, setLoading] = useState(false)
+  const [showLoader, setShowLoader] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const router = useRouter()
   const supabase = createClient()
@@ -44,11 +47,16 @@ export function AuthForm({ mode }: AuthFormProps) {
         })
         if (error) throw error
         
-        router.push("/dashboard")
+        // Show loader before navigation
+        setShowLoader(true)
+        
+        // Wait a bit to show the animation, then navigate
+        setTimeout(() => {
+          router.push("/dashboard")
+        }, 2000)
       }
     } catch (err: any) {
       setError(err.message)
-    } finally {
       setLoading(false)
     }
   }
@@ -90,7 +98,12 @@ export function AuthForm({ mode }: AuthFormProps) {
   }
 
   return (
-    <Card className="w-full max-w-md border-white/10 bg-black/50 backdrop-blur-sm">
+    <>
+      <AnimatePresence>
+        {showLoader && <PageLoader />}
+      </AnimatePresence>
+      
+      <Card className="w-full max-w-md border-white/10 bg-black/50 backdrop-blur-sm">
       <CardHeader className="space-y-2">
         <CardTitle className="text-3xl text-center" style={{ fontFamily: "'Handjet', cursive" }}>
           {mode === "signup" ? "create account" : "welcome back"}
@@ -208,6 +221,7 @@ export function AuthForm({ mode }: AuthFormProps) {
         </p>
       </CardContent>
     </Card>
+    </>
   )
 }
 

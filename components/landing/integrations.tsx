@@ -99,7 +99,7 @@ export function Integrations() {
                 </p>
                 
                 <p className="text-2xl md:text-3xl text-white/90 max-w-2xl mx-auto leading-relaxed font-medium">
-                  But here&apos;s the truth—
+                  But here&apos;s the truth
                   <br />
                   <span className="italic text-purple-200" style={{ fontFamily: "'Handjet', cursive" }}>
                     your biggest rival is yourself.

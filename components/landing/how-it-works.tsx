@@ -9,7 +9,7 @@ const steps = [
   {
     number: "01",
     title: "Connect Your Accounts",
-    description: "Link your GitHub, LeetCode, Codeforces, and Twitter accounts in one click. We securely sync your data to track all your coding activity.",
+    description: "Link your GitHub, LeetCode, Codeforces, and Twitter accounts in one click. We sync your data to track your coding activity.",
     details: [
       "OAuth authentication for security",
       "One-time setup takes 2 minutes",
@@ -177,7 +177,7 @@ function StepTexture({ color, isActive }: { color: string; isActive: boolean }) 
   if (!isActive) return null
 
   return (
-    <div className="absolute inset-0 pointer-events-none overflow-hidden rounded-lg">
+    <div className="absolute inset-0 pointer-events-none overflow-hidden">
       <canvas
         ref={canvasRef}
         className="absolute inset-0 w-full h-full"
@@ -229,10 +229,17 @@ export function HowItWorks() {
           </p>
         </motion.div>
 
-        {/* Grid Layout */}
-        <div className="grid lg:grid-cols-2 gap-8 items-stretch">
-          {/* Left Side - Steps List */}
-          <div className="space-y-2 flex flex-col">
+        {/* Grid Layout - Boxy with extended borders */}
+        <div className="relative overflow-visible">
+          {/* Extended border lines on outer edges */}
+          <div className="absolute -top-4 inset-x-0 h-4 border-l-2 border-r-2 border-white/30 pointer-events-none z-10" />
+          <div className="absolute -bottom-4 inset-x-0 h-4 border-l-2 border-r-2 border-white/30 pointer-events-none z-10" />
+          <div className="absolute inset-y-0 -left-4 w-4 border-t-2 border-b-2 border-white/30 pointer-events-none z-10" />
+          <div className="absolute inset-y-0 -right-4 w-4 border-t-2 border-b-2 border-white/30 pointer-events-none z-10" />
+          
+          <div className="flex flex-col lg:flex-row border border-white/10">
+            {/* Left Side - Steps List */}
+            <div className="flex flex-col border-r border-white/10 lg:w-1/2">
             {steps.map((step, index) => {
               const Icon = step.icon
               const isActive = activeStep === index
@@ -247,25 +254,23 @@ export function HowItWorks() {
                   transition={{ duration: 0.5, delay: index * 0.1 }}
                   onClick={() => setActiveStep(index)}
                   className={cn(
-                    "relative p-5 rounded-lg border cursor-pointer transition-all duration-300 flex-1 overflow-hidden",
+                    "relative p-5 cursor-pointer transition-colors duration-300 overflow-hidden border-b border-white/10 last:border-b-0 flex-1",
                     isActive
-                      ? "bg-white/10 border-white/30 shadow-lg shadow-white/10"
-                      : isPast
-                      ? "bg-white/5 border-white/10 hover:bg-white/8"
-                      : "bg-white/5 border-white/10 hover:bg-white/8"
+                      ? "bg-white/10 hover:bg-white/[0.12]"
+                      : "bg-black hover:bg-white/5"
                   )}
                 >
                   {/* Texture Effect */}
                   <StepTexture color={step.color} isActive={isActive} />
 
-                  <div className="flex items-center gap-4 relative z-10">
+                  <div className="flex items-center gap-4 relative z-10 h-full">
                     {/* Icon/Check */}
                     <div className={cn(
-                      "flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-all",
+                      "flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center transition-colors",
                       isPast
                         ? "bg-green-500/20 border-2 border-green-500/50"
                         : isActive
-                        ? `bg-gradient-to-br ${step.color} shadow-lg`
+                        ? `bg-gradient-to-br ${step.color}`
                         : "bg-white/5 border-2 border-white/20"
                     )}>
                       {isPast ? (
@@ -279,7 +284,7 @@ export function HowItWorks() {
                     </div>
 
                     {/* Content */}
-                    <div className="flex-1">
+                    <div className="flex-1 min-w-0">
                       <div className="flex items-center gap-2">
                         <span className={cn(
                           "text-sm font-mono",
@@ -299,19 +304,19 @@ export function HowItWorks() {
                 </motion.div>
               )
             })}
-          </div>
+            </div>
 
-          {/* Right Side - Active Step Details */}
-          <div className="lg:sticky lg:top-32 h-full flex items-stretch">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activeStep}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -20 }}
-                transition={{ duration: 0.3 }}
-                className="relative p-8 rounded-lg border border-white/10 bg-gradient-to-br from-white/5 to-transparent backdrop-blur-sm overflow-hidden w-full"
-              >
+            {/* Right Side - Active Step Details */}
+            <div className="lg:w-1/2 flex items-stretch">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activeStep}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -20 }}
+                  transition={{ duration: 0.3 }}
+                  className="relative p-8 bg-black hover:bg-white/5 transition-all duration-300 overflow-hidden w-full flex flex-col justify-center"
+                >
                 {/* Timer Circle - Top Right */}
                 <div className="absolute top-6 right-6 z-20">
                   <svg className="w-12 h-12 -rotate-90">
@@ -411,8 +416,9 @@ export function HowItWorks() {
                     ))}
                   </div> */}
                 </div>
-              </motion.div>
-            </AnimatePresence>
+                </motion.div>
+              </AnimatePresence>
+            </div>
           </div>
         </div>
       </div>
